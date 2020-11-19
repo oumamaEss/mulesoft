@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	
+	<sub-flow name="application-context-sub-flow" doc:id="f9517fab-6097-413f-8a73-f2e41d1545c4" doc:description="This flow sets the application context as a variable at the startup of the application.">
+		<ee:transform doc:name="Set Application Context" doc:id="bd913ebe-622d-41ea-b7a8-0940c5ae089a" >
+			<ee:message >
+			</ee:message>
+			<ee:variables >
+				<ee:set-variable variableName="appContext" ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	application: p('application.name') default app.name,
+	environment: p('env') default 'Unknown',
+	version: p('application.version') default 'Unknown',
+	correlationid: correlationId
+}]]></ee:set-variable>
+				<ee:set-variable variableName="messageContext" ><![CDATA[%dw 2.0
+output application/java
+---
+attributes]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="process-initiation-sub-flow" doc:id="cdfe5269-550f-4e49-a567-f8ca2ed30c53" >
+		<logger level="INFO" doc:name="Log Initiation" doc:id="09b161ea-6438-4c59-9187-d636af7dd382" message="#[%dw 2.0
+output application/json skipNullOn='everywhere'
+import * from dw::util::Values
+---
+{
+	applicationDetails: vars.appContext default 'Not Set',
+	(message: &quot;API Request Received&quot;) if(p('application.isAPI') == &quot;true&quot;),
+	(message: (&quot;Flow has started.&quot;)) if(p('application.isAPI') == &quot;false&quot;),
+	timestamp: now() as String { format: &quot;yyyy-MM-dd'T'HH:mm:ss&quot; },
+	(method: attributes.method) if(p('application.isAPI') == &quot;true&quot; and p('application.logMethod') == 'true'),
+	(headers: vars.messageContext.headers mask field(&quot;client_secret&quot;) with &quot;***************&quot;) if(p('application.isAPI') == &quot;true&quot; and p('application.logHeaders') == 'true'),
+	(uri: vars.messageContext.requestUri) if(p('application.isAPI') == &quot;true&quot; and p('application.logURI') == 'true'),
+	(ipAddress: vars.messageContext.remoteAddress) if(p('application.isAPI') == &quot;true&quot; and p('application.logIP') == 'true'),
+	auditData: vars.auditData default null
+}]"/>
+		<remove-variable doc:name="Remove auditData Variable" doc:id="4c6fae29-bb8a-4634-8ffc-bef092c6ba27" variableName="auditData"/>
+	
+</sub-flow>
+	<sub-flow name="process-completion-sub-flow" doc:id="5069b61d-a97c-42dc-8b57-efd7a3b06523" >
+		<logger level="INFO" doc:name="Log Completion" doc:id="41df0fb5-7291-4fba-b089-7bf60302bad1" message="#[%dw 2.0
+output application/json skipNullOn=&quot;everywhere&quot;
+---
+{
+	applicationDetails: vars.appContext default 'Not Set',
+	(message: &quot;API Response Sent&quot;) if(p('application.isAPI') == &quot;true&quot;),
+	(message: (&quot;Flow has finished.&quot;)) if(p('application.isAPI') == &quot;false&quot;),
+	timestamp: now() as String { format: &quot;yyyy-MM-dd'T'HH:mm:ss&quot; },
+	(statusCode: vars.httpStatus) if(p('application.isAPI') == &quot;true&quot;),
+	auditData: vars.auditData default null
+}]" />
+		<remove-variable doc:name="Remove auditData Variable" doc:id="39d7c393-807f-497c-a3a9-64ca5f20488c" variableName="auditData"/>
+	
+</sub-flow>
+	<sub-flow name="audit-logging-sub-flow" doc:id="2244828a-d912-4a16-b31a-5c084fc407e5" >
+		<logger level="INFO" doc:name="Log Audit Message" doc:id="c6c15496-29a1-4ad6-b03f-923b1a235a8c" message="#[%dw 2.0
+output application/json skipNullOn=&quot;everywhere&quot;
+---
+{
+	applicationDetails: vars.appContext default 'Not Set',
+	(message: vars.logAuditMessage) if(vars.logAuditMessage?),
+	timestamp: now() as String { format: &quot;yyyy-MM-dd'T'HH:mm:ss&quot; },
+	auditData: vars.auditData default null
+}]"/>
+		<remove-variable doc:name="Remove logAuditMessage" doc:id="e443fa5b-f96b-4da5-b938-7189afcb2fee" variableName="logAuditMessage"/>
+		<remove-variable doc:name="Remove auditData Variable" doc:id="a39be3d2-d53e-4988-995a-7b4d5a5e6c4f" variableName="auditData"/>
+	</sub-flow>
+	<sub-flow name="debug-logging-sub-flow" doc:id="7233b737-014e-40a4-9ab9-0080e9e92aa3" >
+		<logger level="DEBUG" doc:name="Log Debug Message" doc:id="25b35045-20b9-4466-ac79-4214e00e9029" message="#[%dw 2.0
+output application/json skipNullOn=&quot;everywhere&quot;
+---
+{
+	applicationDetails: vars.appContext default 'Not Set',
+	(message: vars.logDebugMessage) if(vars.logDebugMessage?),
+	timestamp: now() as String { format: &quot;yyyy-MM-dd'T'HH:mm:ss&quot; },
+	auditData: vars.auditData default null
+}]"/>
+		<remove-variable doc:name="Remove logDebugMessage" doc:id="075e0507-580e-4624-85e3-22766d6ab932" variableName="logDebugMessage"/>
+		<remove-variable doc:name="Remove auditData Variable" doc:id="e2df53d3-bca6-45ea-8b19-06c6af3f08b2" variableName="auditData"/>
+	</sub-flow>
+	<sub-flow name="warn-logging-sub-flow" doc:id="26372e71-ef4b-45b6-9879-ac103cb3bc41" >
+		<logger level="WARN" doc:name="Log Warn Message" doc:id="b2616598-ec0d-4105-8998-0fcc31ec959d" message="#[%dw 2.0
+output application/json skipNullOn=&quot;everywhere&quot;
+---
+{
+	applicationDetails: vars.appContext default 'Not Set',
+	(message: vars.logWarnMessage) if(vars.logWarnMessage?),
+	timestamp: now() as String { format: &quot;yyyy-MM-dd'T'HH:mm:ss&quot; },
+	auditData: vars.auditData default null
+}]"/>
+		<remove-variable doc:name="Remove logWarnMessage" doc:id="ccd7e032-7d0f-4bf0-b8d8-7d68ea8495b7" variableName="logWarnMessage"/>
+		<remove-variable doc:name="Remove auditData Variable" doc:id="9bd5a123-dde7-4877-9962-1465f43dfd5a" variableName="auditData"/>
+	</sub-flow>
+</mule>

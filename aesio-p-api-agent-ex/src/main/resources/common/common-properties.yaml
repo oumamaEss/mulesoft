@@ -1,0 +1,22 @@
+#Properties Common to ALL Environments
+
+application:
+    name: "p-api-example"
+    version: "v1.0"
+    isAPI: "true"
+    logHeaders: "true"
+    logURI: "true"
+    logIP: "true"
+    logMethod: "true"
+    errorMapping:
+      TECHNICAL:
+        NOT_IMPLEMENTED:
+          httpStatus: "501"
+          errorSummary: "non implémenté."
+          errorCode: "EXAMPLE_001"
+
+#If Cloudhub and Visualizer are used this will tag this application correctly.
+anypoint:
+  platform:
+    visualizer:
+      tags: "Process"

@@ -1,0 +1,61 @@
+#%RAML 1.0 DataType
+properties:
+  header:
+    type: object
+    description: métadata contenant des informations relative à l'appel API
+    properties:
+      apiName:
+        type: string
+        description: nom de l'API
+        example: "Simple Broker API"
+        required: true
+      apiVersion:
+        type: string
+        description: version de l'API
+        example: "v1.0.0"
+        required: true
+      correlation-id:
+        type: string
+        description: UUID alphanumérique transmis à chaque requête à des fins de suivi transactionel
+        required: true
+  data:
+    type: object
+    description: contient les informations retrournées par l'API
+  error:
+    type: object
+    required: false
+    description: contient le detail des éventuelles erreurs recontrées dans le traintement de l'appel
+    properties:
+      description:
+        type: string
+        description: description de l'érreur
+        example: Missing required header - x-api-correlation-id
+        required: true
+      code:
+        type: string
+        description: code de l'erreur
+        example: '001'
+        required: true
+      timestamp:
+        type: string
+        required: true
+        description: timestamp relatif à la capture de l'erreur
+      additionalDetails:
+        type: any
+        required: false
+        description: An optional attribute that could be of any type, usually an object or string that provides extra details around the exception cause.
+      requestReference:
+        type: object
+        description: référence éventuelle au sous appel en erreur
+        required: false
+        properties:
+          method:
+            description: méthode du sous appel
+            type: string
+            example: GET
+            required: true
+          uri:
+            description: URI du sous appel
+            type: string
+            example: /accounts/02020202
+            required: true

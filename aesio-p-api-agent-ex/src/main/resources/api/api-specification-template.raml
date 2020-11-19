@@ -1,0 +1,72 @@
+#%RAML 1.0
+title: p-api-agent
+description: To manage AESIO Representatives such as employees and contractors.
+version: v1.0
+mediaType: application/json
+protocols: [HTTPS]
+baseUri: https://host:port/p-api-agent/{version}
+baseUriParameters:
+  version:
+    type: string
+    example: v1.0
+    required: true
+    description: Version de l'API au format x.y
+
+uses: 
+  common-fragments: exchange_modules/34eac112-3599-474b-bf15-56e1412c1ed0/enterprise-common-raml-fragments/1.0.4/enterprise-common-raml-fragments.raml
+
+securedBy:
+  - common-fragments.clientEnforcement
+
+/agent:
+  /{id}:
+    is:
+      - common-fragments.common-headers
+      - common-fragments.common-error-responses: {"apiName": "p-api-agent", "apiVersion": "v1.0"}
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: !include types/agent-response.raml
+
+  /rechercher-par-nom:
+    is:
+      - common-fragments.common-headers
+      - common-fragments.common-error-responses: {"apiName": "p-api-agent", "apiVersion": "v1.0"}
+    post:
+      description: Acts as a GET request using POST due to sensitive data. Used for searching for an agent based on the first and lastname.
+      body:
+        application/json:
+          type: !include types/agent-by-name-request.raml
+      responses:
+        200:
+          body:
+            application/json:
+              type: !include types/agent-response.raml
+
+  /rechercher-par-email:
+    is:
+      - common-fragments.common-headers
+      - common-fragments.common-error-responses: {"apiName": "p-api-agent", "apiVersion": "v1.0"}
+    post:
+      description: Acts as a GET request using POST due to sensitive data. Used for searching for an agent based on the email address.
+      body:
+        application/json:
+          type: !include types/agent-by-email-request.raml
+      responses:
+        200:
+          body:
+            application/json:
+              type: !include types/agent-response.raml
+
+/health-check:
+  is:
+    - common-fragments.common-headers
+    - common-fragments.common-error-responses: {"apiName": "p-api-agent", "apiVersion": "v1.0"}
+  get:
+    responses:
+      200:
+          body:
+            application/json:
+              example: { "status" : "ok" }

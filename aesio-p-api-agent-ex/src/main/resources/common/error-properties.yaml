@@ -1,0 +1,259 @@
+#This file describes a list of preconfigured errors a mule application could throw
+#Param: httpStatus - This denotes the status code to be used for the exception
+#Param: errorSummary - This denotes the summary of the error to be displayed in the response when the full details of the error should not be returned.
+#Param: errorCode - This is a numeric identifier for a specific error allowing API Consumers to reference a particular error code without providing detailed internal information to them.
+#Param: returnError - This denotes whether to return the error.description in the response. Default is FALSE.
+errorMapping:
+  APIKIT:
+    BAD_REQUEST:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "001"
+      returnError: "true"
+    NOT_FOUND:
+      httpStatus: "404"
+      errorSummary: "Not Found"    
+      errorCode: "002"
+    METHOD_NOT_ALLOWED:
+      httpStatus: "405"
+      errorSummary: "Method Not Allowed"
+      errorCode: "003"
+    NOT_ACCEPTABLE:
+      httpStatus: "406"
+      errorSummary: "Not Acceptable"    
+      errorCode: "004"
+    UNSUPPORTED_MEDIA_TYPE:
+      httpStatus: "415"
+      errorSummary: "Unsupported Media Type"    
+      errorCode: "005"
+    NOT_IMPLEMENTED:
+      httpStatus: "501"
+      errorSummary: "Not Implemented"
+      errorCode: "006"
+  HTTP:
+    BAD_REQUEST:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "007"
+    PARSING:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "008"
+    CLIENT_SECURITY:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "009"
+    SECURITY:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "010"
+    FORBIDDEN:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "011"
+    UNAUTHORIZED:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "012"
+    NOT_FOUND:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "013"      
+    METHOD_NOT_ALLOWED:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"
+      errorCode: "014"
+    NOT_ACCEPTABLE:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "015"
+    UNSUPPORTED_MEDIA_TYPE:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "016"
+    TOO_MANY_REQUESTS:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "017"
+    INTERNAL_SERVER_ERROR:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "018"
+    CONNECTIVITY:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "019"
+    RETRY_EXHAUSTED:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "020"
+    TIMEOUT:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "021"
+  SALESFORCE:
+    CONNECTIVITY:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "022"
+    RETRY_EXHAUSTED:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "023"
+    MUTUAL_AUTHENTICATION_FAILED:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "024"
+    INVALID_INPUT:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "025"
+    LIMIT_EXCEEDED:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "026"
+    INVALID_RESPONSE:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "027"
+    TIMEOUT:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "028"
+    NOT_FOUND:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "029"
+  WSC:
+    SOAP_FAULT:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "030"
+    TIMEOUT:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "031"
+    BAD_RESPONSE:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "032"
+    BAD_REQUEST:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "033"
+    CONNECTIVITY:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "034"
+    CANNOT_DISPATCH:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "035"
+    RETRY_EXHAUSTED:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "036"
+    ENCODING:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "037"
+    INVALID_WSDL:
+      httpStatus: "500"
+      errorSummary: "Internal Server Error"    
+      errorCode: "038"
+  VALIDATION:
+    NOT_BLANK_STRING:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "039"
+      returnError: "true"
+    NOT_ELAPSED_TIME:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "040"
+      returnError: "true"
+    INVALID_EMAIL:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "041"
+      returnError: "true"
+    NOT_EMPTY_COLLECTION:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "042"
+      returnError: "true"
+    INVALID_BOOLEAN:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "043"
+      returnError: "true"
+    INVALID_IP:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "044"
+      returnError: "true"
+    REJECTED_IP:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "045"
+      returnError: "true"
+    BLANK_STRING:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "046"
+      returnError: "true"
+    ELAPSED_TIME:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "047"
+      returnError: "true"
+    EMPTY_COLLECTION:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "048"
+      returnError: "true"
+    NULL:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "049"
+      returnError: "true"
+    NOT_NULL:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "050"
+      returnError: "true"
+    INVALID_NUMBER:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "051"
+      returnError: "true"
+    INVALID_TIME:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "052"
+      returnError: "true"
+    INVALID_URL:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "053"
+      returnError: "true"
+    MISMATCH:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "054"
+      returnError: "true"
+    INVALID_SIZE:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "055"
+      returnError: "true"
+    MULTIPLE:
+      httpStatus: "400"
+      errorSummary: "Bad Request"    
+      errorCode: "056"
+      returnError: "true"
+  MULE:
+    EXPRESSION:
+      httpStatus: "400"
+      errorSummary: "Bad Request"
+      errorCode: "057"

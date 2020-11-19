@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="rechercher-par-nom" doc:id="856fc940-2e9d-4674-a7de-d73963a348d7" >
+		<salesforce:query doc:name="Query" doc:id="a7c232cc-404b-4da1-8f92-193a118b3a57" config-ref="Salesforce_Config1">
+			<salesforce:salesforce-query ><![CDATA[select id, email, lastname, firstname, createddate, userroleid 
+from user where firstname=':fname' and lastname = ':lname' and userroleid = ':role' and createddate = ':datecreation' 
+and email =':email']]></salesforce:salesforce-query>
+			<salesforce:parameters ><![CDATA[#[output application/java
+---
+{
+	fname : payload.prenom,
+	lname : payload.nom,
+	role : payload.role,
+	datecreation : payload.datecreation,
+	email : payload.email
+}]]]></salesforce:parameters>
+		</salesforce:query>
+		<ee:transform doc:name="Transform Message" doc:id="54ea5913-3a73-46fe-9a46-133dc3845617" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+ {
+ 	
+	nom : payload.lname,
+	prenom : payload.fname,
+	email : payload.email,
+	role : payload.role,
+	datecreation : payload.datecreation
+		
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="ecfb23bb-ac55-4bfe-bc5b-d0c5a91e0c6e" message="Coucou"/>
+	</sub-flow>
+</mule>

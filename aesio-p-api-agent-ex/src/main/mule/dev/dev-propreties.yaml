@@ -1,0 +1,16 @@
+#Local Environment Properties
+api:
+    id: "0000000"
+resources:
+    http:
+        listener:
+            host: "0.0.0.0"
+            port: "8091"
+            basepath: "/p-api-agent-ex/v1.0/*"
+    salesforce:
+        username: "integration.mulesoft@aesio.fr.int"
+        url: "https://test.salesforce.com/services/Soap/u/48.0"
+        connection:
+            timeout: "30" #Seconds
+        response:
+            timeout: "30" #Seconds

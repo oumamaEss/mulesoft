@@ -1,0 +1,9 @@
+#Local Environment Properties
+api:
+    id: "0000000"
+resources:
+    http:
+        listener:
+            host: "0.0.0.0"
+            port: "8091"
+            basepath: "/p-api-example/v1.0/*"

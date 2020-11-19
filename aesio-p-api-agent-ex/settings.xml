@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/SETTINGS/1.1.0" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
+<servers>
+<server>
+	<id>Repository</id>
+	<username>OumamaEssafi</username>
+	<password>NoOuAbFa16</password>
+</server>
+</servers>
+<proxies>
+<proxy>
+	<id>aesio</id>
+	<active>true</active>
+	<protocol>http</protocol>
+	<host>10.42.13.14</host>
+	<port>8080</port>
+	<username>oumama.es-safi-ext</username>
+	<password>OuEs4449</password>
+	<nonProxyHosts>www.google.com|*.example.com</nonProxyHosts>
+</proxy>
+</proxies>
+</settings>
