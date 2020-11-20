@@ -1,0 +1,5 @@
+#Secure Properties for Local Environment
+resources:
+    salesforce:
+        password: "![2k4S6PeHr4tdBGXyPK0GMw==]"
+        token: "![8UJQgIHQ6uG60f04nLgOm77AGBQQtgZuD06WS0WI2aE=]"

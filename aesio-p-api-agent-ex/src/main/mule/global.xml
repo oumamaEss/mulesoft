@@ -19,9 +19,9 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
    <!-- Must be enabled for deployment. -->
    <!-- <api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="3a4a2991-4533-4d7a-88f7-3aad24929ccc" flowRef="p-api-courtier-main" /> -->
     
-	<configuration-properties doc:name="Environment Configuration properties" doc:id="112865f9-4fd4-48a2-ab61-f09bed22ce9c" file="${env}\${env}-properties.yaml" />
-	<configuration-properties doc:name="Common Configuration properties" doc:id="be5ec33c-4238-486c-8f63-b37797b71bf0" file="common\common-properties.yaml" />
-	<configuration-properties doc:name="Error Configuration properties" doc:id="8468a2c7-b19c-4916-afe7-3ee15b0c3057" file="common\error-properties.yaml" />
+	<configuration-properties doc:name="Environment Configuration properties" doc:id="112865f9-4fd4-48a2-ab61-f09bed22ce9c" file="${env}/${env}-properties.yaml" />
+	<configuration-properties doc:name="Common Configuration properties" doc:id="be5ec33c-4238-486c-8f63-b37797b71bf0" file="common/common-properties.yaml" />
+	<configuration-properties doc:name="Error Configuration properties" doc:id="8468a2c7-b19c-4916-afe7-3ee15b0c3057" file="common/error-properties.yaml" />
 	
 	<!-- Be sure to use secure.key as the secure property symmetric key name -->
 <!-- 	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="6e4586ef-2483-4dcb-acf1-91ba21fb618e" file="${env}/${env}-secure-properties.yaml" key="${secure.key}" /> -->
@@ -30,9 +30,11 @@ http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/sc
 	<!-- Should be removed before deployment ideally -->
 	<global-property doc:name="Global Property" doc:id="b493660f-d453-441f-8da6-0b9ee747e3f0" name="env" value="dev" />
 	<salesforce:sfdc-config name="Salesforce_Config1" doc:name="Salesforce Config" doc:id="9c96ce4c-421b-42c8-b2d5-63e16d29ef0b" >
-		<salesforce:basic-connection username="{resources.salesforce.username}" password="{resources.salesforce.password}" securityToken="{resources.salesforce.security-token}" url="{resources.salesforce.url}" />
+		<salesforce:basic-connection username="${resources.salesforce.username}" password="${secure::resources.salesforce.password}" securityToken="${secure::resources.salesforce.token}" url="${resources.salesforce.url}" >
+			<salesforce:proxy-configuration host="10.42.13.14" port="8080" />
+		</salesforce:basic-connection>
 	</salesforce:sfdc-config>
-	<global-property doc:name="Global Property" doc:id="423b3d2f-9aca-4792-a65e-f4e77cd381c3" name="secure.key" value="Pf27FrJ0UghY3yKO" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="7f108c7e-dd21-47d1-82f5-41ba902b5d3e" file="${env}/${env}-secure-propreties.yaml" key="{secure.key}" />
+	<global-property doc:name="Global Property" doc:id="423b3d2f-9aca-4792-a65e-f4e77cd381c3" name="secure.key" value="eKhBBAq5q23634Tw" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="7f108c7e-dd21-47d1-82f5-41ba902b5d3e" file="${env}/${env}-secure-properties.yaml" key="${secure.key}" />
 	
 </mule>
